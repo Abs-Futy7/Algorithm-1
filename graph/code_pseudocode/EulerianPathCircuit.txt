@@ -1,0 +1,42 @@
+Algorithm EulerianPathCircuit(nodeCount, edgeList):
+    1. Create adjacency list `g` for the graph.
+    2. Initialize `visited[]` array as false.
+    3. Initialize `oddDegreeCount` as 0.
+
+    // Step 1: Build the Graph
+    For each (x, y) in edgeList:
+        Add y to g[x]  // Undirected graph
+        Add x to g[y]
+
+    // Step 2: Check if Graph is Connected
+    If isConnected() is False:
+        Print "Graph is not Eulerian"
+        Return
+
+    // Step 3: Count Vertices with Odd Degree
+    For each node i from 1 to nodeCount:
+        If size of g[i] is odd:
+            oddDegreeCount++
+
+    // Step 4: Determine Eulerian Type
+    If oddDegreeCount == 0:
+        Print "Graph has an Eulerian Circuit"
+    Else If oddDegreeCount == 2:
+        Print "Graph has an Eulerian Path"
+    Else:
+        Print "Graph is not Eulerian"
+
+// Function to Check if the Graph is Connected
+Function isConnected():
+    1. Find the first node with at least one edge (ignore isolated nodes).
+    2. If no edges exist, return True (trivially Eulerian).
+    3. Perform DFS from the first non-isolated node.
+    4. After DFS, check if all non-isolated nodes are visited.
+    5. If all visited, return True; otherwise, return False.
+
+// DFS Function for Connectivity Check
+Function DFS(node, visited):
+    visited[node] ← True
+    For each child in g[node]:
+        If visited[child] is False:
+            DFS(child, visited)

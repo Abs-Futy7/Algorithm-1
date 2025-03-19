@@ -1,0 +1,39 @@
+Algorithm FindBridges(nodeCount, edgeList):
+    1. Create adjacency list `g` for the graph
+    2. Initialize `disc[]` (discovery time) to -1
+    3. Initialize `low[]` (lowest reachable discovery time) to -1
+    4. Initialize `visited[]` to false
+    5. Initialize `time` counter to 0
+    6. Create an empty list `bridges` to store bridge edges
+
+    // Step 1: Build the Graph
+    For each (x, y) in edgeList:
+        Add y to g[x]  // Undirected graph
+        Add x to g[y]
+
+    // Step 2: DFS Traversal
+    For each node i from 1 to nodeCount:
+        If visited[i] is false:
+            Call DFS(i, -1)  // Start DFS traversal
+
+    Return `bridges` list
+
+// DFS Function to Find Bridges
+Function DFS(node, parent):
+    visited[node] ← true
+    disc[node] ← low[node] ← ++time  // Set discovery and low values
+
+    For each child in g[node]:
+        If child = parent: 
+            Continue  // Ignore the parent node
+
+        If visited[child] is false:
+            Call DFS(child, node)  // Recursive DFS call
+            low[node] ← min(low[node], low[child])  // Update low-link value
+
+            // Step 3: Check Bridge Condition
+            If low[child] > disc[node]:
+                Add (node, child) to `bridges` list
+
+        Else:  // If the child is already visited (Back edge)
+            low[node] ← min(low[node], disc[child])  // Update low-link value
