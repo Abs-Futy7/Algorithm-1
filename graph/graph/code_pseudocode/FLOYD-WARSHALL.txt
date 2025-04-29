@@ -1,0 +1,26 @@
+FLOYD-WARSHALL(ALGORITHM)
+--------------------------
+1. Initialize a distance matrix `dist[][]` of size `V x V`:
+   - Set `dist[i][j] = INF` (infinity) for all pairs `(i, j)`.
+   - Set `dist[i][i] = 0` for all `i` (distance to itself is 0).
+   - If there is an edge from `i` to `j` with weight `w`, set `dist[i][j] = w`.
+
+2. Run Floyd-Warshall Algorithm:
+   FOR each intermediate node `k` from `0` to `V-1`:
+       FOR each starting node `i` from `0` to `V-1`:
+           FOR each ending node `j` from `0` to `V-1`:
+               IF `dist[i][k] + dist[k][j] < dist[i][j]`:
+                   - Update `dist[i][j] = dist[i][k] + dist[k][j]`
+
+3. Print the shortest distance matrix:
+   FOR each node `i` from `0` to `V-1`:
+       FOR each node `j` from `0` to `V-1`:
+           IF `dist[i][j] == INF`, print "INF"
+           ELSE, print `dist[i][j]`
+
+
+
+Time Complexity Analysis
+
+    Triple nested loop → O(V³)
+    Suitable for small graphs, but not efficient for large graphs.

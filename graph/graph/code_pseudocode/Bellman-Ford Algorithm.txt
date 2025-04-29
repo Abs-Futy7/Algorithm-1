@@ -1,0 +1,19 @@
+BellmanFord(V, edges, src):
+    // Step 1: Initialize distances
+    Create an array `dist` of size V
+    Set all `dist[i] = ∞` (Infinity)
+    Set `dist[src] = 0`  // Distance to source is 0
+
+    // Step 2: Relax all edges (V - 1) times
+    Repeat (V - 1) times:
+        For each edge (u, v, weight) in edges:
+            If dist[u] is not ∞ and dist[u] + weight < dist[v]:
+                Update dist[v] = dist[u] + weight
+
+    // Step 3: Check for negative weight cycles
+    For each edge (u, v, weight) in edges:
+        If dist[u] is not ∞ and dist[u] + weight < dist[v]:
+            Return [-1] // Negative weight cycle detected
+
+    // Step 4: Return shortest distances
+    Return dist[]

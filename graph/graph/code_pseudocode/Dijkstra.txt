@@ -1,0 +1,33 @@
+Algorithm Dijkstra(Graph, source):
+
+    // Step 1: Initialize
+    dist[] ← array of size V (number of vertices) initialized to infinity
+    dist[source] ← 0
+    
+    PQ ← create a priority queue where each entry is [node, distance]
+    PQ.push([source, 0])  // Insert the source node with distance 0
+
+    
+    
+    // Step 2: While there are nodes to process in the priority queue
+    while PQ is not empty:
+        // Step 3: Get the node with the smallest distance from the priority queue
+        currentNode, currentDist ← PQ.pop()  // Pop the node with the minimum distance
+
+        // If the node has already been processed with the smallest distance, continue to the next one
+        if currentDist > dist[currentNode]:
+            continue
+
+        // Step 4: Process each neighbor of the current node
+        for each neighbor in Graph[currentNode]:
+            neighborNode, weight ← neighbor
+            // Step 5: Calculate the distance to the neighbor through the current node
+            newDist ← dist[currentNode] + weight
+
+            // If a shorter path to the neighbor is found, update the distance and push to priority queue
+            if newDist < dist[neighborNode]:
+                dist[neighborNode] ← newDist
+                PQ.push([neighborNode, newDist])  // Add the updated neighbor to the priority queue
+    
+    // Step 6: Return or output the shortest distances
+    return dist
