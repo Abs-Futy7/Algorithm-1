@@ -1,55 +1,41 @@
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+
 
 class ActivitySelection {
-    int N;
-    int[] start;
-    int[] finish;
 
-    // Constructor
-    public ActivitySelection(int N, int[] start, int[] finish) {
-        this.N = N;
-        this.start = start;
-        this.finish = finish;
-    }
-
-    // Method to perform activity selection using greedy algorithm
-    public ArrayList<Integer> maxMeetings() {
-        ArrayList<Integer> ans = new ArrayList<>();
-        int[][] a = new int[N][3];
-
-        for (int i = 0; i < N; i++) {
-            a[i][0] = i + 1; // Meeting number
-            a[i][1] = start[i];  // Start time
-            a[i][2] = finish[i]; // Finish time
-        }
-
-        Arrays.sort(a, Comparator.comparingInt(o -> o[2]));
-
-        int r = a[0][2]; // Finish time of the first meeting
-        ans.add(a[0][0]);
-
-        for (int i = 1; i < a.length; i++) {
-            if (a[i][1] > r) {
-                ans.add(a[i][0]);
-                r = a[i][2];
-            }
-        }
-
-        Collections.sort(ans); // Optional: return sorted meeting indices
-        return ans;
-    }
-
-    // Main method to test the class
     public static void main(String[] args) {
-        int[] start = {1, 3, 0 , 5, 3, 5, 6, 8 , 8, 2, 12};
-        int[] finish = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-        int N = start.length;
-
-        ActivitySelection selector = new ActivitySelection(N, start, finish);
-        ArrayList<Integer> selectedMeetings = selector.maxMeetings();
-
-        System.out.println("Selected meetings: " + selectedMeetings);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] activities = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            activities[i][0] = sc.nextInt(); // start
+            activities[i][1] = sc.nextInt(); // finish
+        }
+        selectActivities(activities, n);
     }
+
+    
+    static void selectActivities(int[][] activities, int n) {
+    // Sort based on finish time
+    Arrays.sort(activities, (a, b) -> Integer.compare(a[1], b[1]));
+    int cnt = 1; // First activity is always selected
+    int prevFinish = activities[0][1];
+
+    System.out.println("Selected activity: " + activities[0][0] + " to " + activities[0][1]);
+
+    for (int i = 1; i < n; i++) {
+        if (activities[i][0] >= prevFinish) {
+            cnt++;
+            System.out.println("Selected activity: " + activities[i][0] + " to " + activities[i][1]);
+            prevFinish = activities[i][1];
+        }
+    }
+    System.out.println("Maximum number of activities: " + cnt);
+}
 }
 
 /*
